@@ -34,7 +34,7 @@ def getTrain(reshape=True):
         # 훈련 데이타를 N X 400으로 변환
         train = train.reshape(-1,400).astype(np.float32) # 4500x400
     # 레이블 생성
-    train_labels = np.repeat(k,500).reshape(-1,1) # 각 숫자당 반복(10x450)
+    train_labels = np.repeat(k,450).reshape(-1,1) # 각 숫자당 45번 반복(10x450)
     return (train, train_labels)
 
 # 테스트용 데이타 반환 ---④
