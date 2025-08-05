@@ -13,8 +13,8 @@ colors = [
     'yellow',
     'black',
     'white',
-    'gray'
-]
+    'gray']
+
 def train_event(event, x, y, flags, param):
     global rgb, hsv, img
     if event == cv2.EVENT_LBUTTONDOWN:
@@ -33,6 +33,20 @@ def train_event(event, x, y, flags, param):
                 writer.writerows(data)
             print(f'{color}가 {colors[key-49]}로 저장되었습니다.')
 
+def test_event(event, x, y, flags, param):
+    global colors
+    if event == cv2.EVENT_LBUTTONDOWN:
+        newcomer = rgb[y, x]
+        with open('color_dataset.csv', 'r') as data:
+            color = data[:3]
+            label = data[3]
+            knn = cv2.ml.KNearest_create()
+            knn.train(color, cv2.ml.ROW_SAMPLE, label)
+            ret, results, neighbours, dist = knn.findNearest(newcomer, 5)
+            print('ret:%s, result:%s, neighbours:%s, distance:%s' \
+                  %(ret, results, neighbours, dist))
+            print(f"해당 색은 {colors[label]}로 추정됩니다.")
+
 while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
@@ -42,11 +56,15 @@ while cap.isOpened():
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
     cv2.imshow('camera', img)
-    cv2.setMouseCallback('camera', train_event, img)
+    
 
     key = cv2.waitKey(1) & 0xFF
     if key == 27:
         break
+    elif key == ord('l'):
+        cv2.setMouseCallback('camera', train_event, img)
+    elif key == ord('p'):
+        cv2.setMouseCallback('camera', test_event, img)
 
 cap.release()
 cv2.destroyAllWindows()
