@@ -11,9 +11,6 @@ criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
 # 평균 클러스터링 적용
 ret, label, center = cv2.kmeans(data, K, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
 
-# print(center)
-zero = len(data[label.ravel()==0])
-one = len(data[label.ravel()==1])
 counts = []
 for i in range(len(center)):
     counts.append(len(data[label.ravel()==i]))
@@ -21,8 +18,7 @@ colors = []
 for i in range(len(center)):
     temp = [int(item) for item in center[i]]
     colors.append(tuple(reversed(temp))) # BGR -> RGB 순서로 저장
-print(counts)
-print(colors)
+
 
 # cv2.imshow('Image', img)
 # plt.show()
