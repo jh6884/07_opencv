@@ -8,7 +8,7 @@ knn = cv2.ml.KNearest_create()
 knn.train(train, cv2.ml.ROW_SAMPLE, train_labels)
 
 # 인식시킬 손글씨 이미지 읽기 ---③
-image = cv2.imread('../img/4027.png')
+image = cv2.imread('../img/number.png')
 cv2.imshow("image", image)
 cv2.waitKey(0) 
 
