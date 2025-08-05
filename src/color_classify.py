@@ -37,15 +37,18 @@ def test_event(event, x, y, flags, param):
     global colors
     if event == cv2.EVENT_LBUTTONDOWN:
         newcomer = rgb[y, x]
-        with open('color_dataset.csv', 'r') as data:
-            color = data[:3]
-            label = data[3]
-            knn = cv2.ml.KNearest_create()
-            knn.train(color, cv2.ml.ROW_SAMPLE, label)
-            ret, results, neighbours, dist = knn.findNearest(newcomer, 5)
-            print('ret:%s, result:%s, neighbours:%s, distance:%s' \
-                  %(ret, results, neighbours, dist))
-            print(f"해당 색은 {colors[label]}로 추정됩니다.")
+        with open('color_dataset.csv', 'r') as d:
+            color = []
+            label = []
+            for i in d:
+                data = list(i)
+                print(data)
+            # knn = cv2.ml.KNearest_create()
+            # knn.train(color, cv2.ml.ROW_SAMPLE, label)
+            # ret, results, neighbours, dist = knn.findNearest(newcomer, 5)
+            # print('ret:%s, result:%s, neighbours:%s, distance:%s' \
+            #       %(ret, results, neighbours, dist))
+            # print(f"해당 색은 {colors[label]}로 추정됩니다.")
 
 while cap.isOpened():
     ret, frame = cap.read()
