@@ -6,7 +6,6 @@ cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
-labels =[]
 colors = [
     'red',
     'blue',
@@ -26,6 +25,12 @@ def train_event(event, x, y, flags, param):
         if key == 67:
             pass
         elif 49 <= key <= 55:
+            color_code = [int(item) for item in rgb[y,x]]
+            color_code.append((key-49))
+            data = [color_code]
+            with open('color_dataset.csv', 'a', newline='', encoding='utf-8') as file:
+                writer = csv.writer(file)
+                writer.writerows(data)
             print(f'{color}가 {colors[key-49]}로 저장되었습니다.')
 
 while cap.isOpened():
