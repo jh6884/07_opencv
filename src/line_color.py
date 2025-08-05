@@ -11,16 +11,23 @@ criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
 # 평균 클러스터링 적용
 ret, label, center = cv2.kmeans(data, K, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
 
+# 픽셀의 개수, 비율 리스트 작성
 ratio_counts = []
+number_counts = []
 for i in range(len(center)):
     count = len(data[label.ravel()==i])
+    number_counts.append(count)
     ratio_counts.append(count/data.shape[0])
+
+# 색상 설정
 colors = []
 for i in range(len(center)):
     temp = [int(item)/255 for item in center[i]]
     colors.append(tuple(reversed(temp))) # BGR -> RGB 순서로 저장
 
 xlist = [f'C{i}' for i in range(1, 17)]
+
+# 결과 출력
 plt.subplot(1,2,1)
 plt.pie(ratio_counts, labels=xlist, autopct='%.1f%%')
 
