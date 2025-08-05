@@ -20,7 +20,7 @@ for i in range(len(center)):
 colors = []
 for i in range(len(center)):
     temp = [int(item) for item in center[i]]
-    colors.append(tuple(temp))
+    colors.append(tuple(reversed(temp))) # BGR -> RGB 순서로 저장
 print(counts)
 print(colors)
 
