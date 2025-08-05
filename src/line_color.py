@@ -14,10 +14,14 @@ ret, label, center = cv2.kmeans(data, K, None, criteria, 10, cv2.KMEANS_RANDOM_C
 # print(center)
 zero = len(data[label.ravel()==0])
 one = len(data[label.ravel()==1])
+counts = []
+for i in range(len(center)):
+    counts.append(len(data[label.ravel()==i]))
 colors = []
 for i in range(len(center)):
-    colors.append(center[i].tolist())
-
+    temp = [int(item) for item in center[i]]
+    colors.append(tuple(temp))
+print(counts)
 print(colors)
 
 # cv2.imshow('Image', img)
